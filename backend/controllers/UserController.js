@@ -1,3 +1,4 @@
+const httpErrors = require("../constants/httpErrors");
 const createUserToken = require("../helpers/create-user-token");
 const getToken = require("../helpers/get-token");
 const getUserByToken = require("../helpers/get-user-by-token");
@@ -20,11 +21,11 @@ module.exports = class UserController {
     // Valida os campos obrigatórios
     for (const [field, message] of Object.entries(requiredFields)) {
       if (!req.body[field]) {
-        return res.status(422).json({
-          code: 422,
-          status: "error",
-          message: message,
-        });
+        const error = { ...httpErrors.CLIENT_ERRORS.REQUIRED_FIELD };
+
+        error.message = error.message.replace("field_name", field);
+
+        return res.status(422).json(error);
       }
     }
 
@@ -38,11 +39,7 @@ module.exports = class UserController {
 
     for (const validation of customValidations) {
       if (validation.condition) {
-        return res.status(422).json({
-          code: 422,
-          status: "error",
-          message: validation.message,
-        });
+        return res.status(422).json(httpErrors.CLIENT_ERRORS.PASSWORD_MISMATCH);
       }
     }
 
@@ -50,11 +47,7 @@ module.exports = class UserController {
     const userExists = await UserSchema.findOne({ email });
 
     if (userExists) {
-      return res.status(422).json({
-        code: 422,
-        status: "error",
-        message: "Por favor, utilize outro email!",
-      });
+      return res.status(422).json(httpErrors.CLIENT_ERRORS.EMAIL_EXISTS);
     }
 
     // create password
@@ -75,11 +68,7 @@ module.exports = class UserController {
 
       await createUserToken(newUser, req, res);
     } catch (error) {
-      return res.status(500).json({
-        code: 500,
-        status: "error",
-        message: `Ocorreu um erro no servidor, tente novamente mais tarde! Detalhes do erro: ${error.message}`,
-      });
+      return res.status(500).json(httpErrors.SERVER_ERRORS.INTERNAL);
     }
   }
 
@@ -87,33 +76,25 @@ module.exports = class UserController {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(422).json({
-        code: 422,
-        status: "error",
-        message: "Email e senha são obrigatórios!",
-      });
+      return res
+        .status(422)
+        .json(httpErrors.CLIENT_ERRORS.EMAIL_AND_PASSWORD_REQUIRED);
     }
 
     // Verifica se o Usuário existe
     const user = await UserSchema.findOne({ email });
 
     if (!user) {
-      return res.status(422).json({
-        code: 422,
-        status: "error",
-        message: "Não há usuário cadastrado com esse email!",
-      });
+      return res
+        .status(422)
+        .json(httpErrors.CLIENT_ERRORS.EMAIL_NOT_REGISTERED);
     }
 
     // Verifica se a senha bate com a do banco de dados
     const checkPassword = await bcrypt.compare(password, user.password);
 
     if (!checkPassword) {
-      return res.status(422).json({
-        code: 422,
-        status: "error",
-        message: "Senha inválida!",
-      });
+      return res.status(422).json(httpErrors.CLIENT_ERRORS.INVALID_PASSWORD);
     }
 
     await createUserToken(user, req, res);
@@ -136,9 +117,7 @@ module.exports = class UserController {
     }
 
     res.status(200).json({
-      code: 200,
-      status: "success",
-      message: "Usuário autenticado com sucesso!",
+      ...httpErrors.SUCCESS.USER_AUTHENTICATED,
       currentUser,
     });
   }
@@ -152,25 +131,15 @@ module.exports = class UserController {
         .select("-confirmPassword");
 
       if (!user) {
-        return res.status(404).json({
-          code: 404,
-          status: "error",
-          message: "Usuário não encontrado!",
-        });
+        return res.status(404).json(httpErrors.CLIENT_ERRORS.USER_NOT_FOUND);
       }
 
       res.status(200).json({
-        code: 200,
-        status: "success",
-        message: `O usuário: ${user.name} foi encontrado com sucesso!`,
+        ...httpErrors.SUCCESS.USER_FOUND,
         user,
       });
     } catch (error) {
-      return res.status(500).json({
-        code: 500,
-        status: "error",
-        message: `Ocorreu um erro no servidor, tente novamente mais tarde! Detalhes do erro: ${error.message}`,
-      });
+      return res.status(500).json(httpErrors.SERVER_ERRORS.INTERNAL);
     }
   }
 
@@ -205,17 +174,17 @@ module.exports = class UserController {
     const customValidations = [
       {
         condition: user.email !== email && userExists,
-        message: "Por favor, utilize outro e-mail!",
+        error: httpErrors.CLIENT_ERRORS.ANOTHER_EMAIL_IN_USE,
       },
       {
         condition: password && password !== confirmpassword,
-        message: "As senhas não conferem.",
+        error: httpErrors.CLIENT_ERRORS.PASSWORDS_DONT_MATCH,
       },
     ];
 
     for (const validation of customValidations) {
       if (validation.condition) {
-        return res.status(422).json({ message: validation.message });
+        return res.status(422).json(validation.error);
       }
     }
 
@@ -231,7 +200,9 @@ module.exports = class UserController {
     // Alterar senha se fornecida
     if (password && password === confirmpassword) {
       const salt = await bcrypt.genSalt(12);
+
       const passwordHash = await bcrypt.hash(password, salt);
+
       user.password = passwordHash;
     }
 
@@ -243,17 +214,11 @@ module.exports = class UserController {
       );
 
       res.status(200).json({
-        code: 200,
-        status: "success",
-        message: "Usuário atualizado com sucesso!",
+        ...httpErrors.SUCCESS.USER_UPDATED,
         data: updatedUser,
       });
     } catch (error) {
-      return res.status(500).json({
-        code: 500,
-        status: "error",
-        message: `Ocorreu um erro no servidor, tente novamente mais tarde! Detalhes do erro: ${error.message}`,
-      });
+      return res.status(500).json(httpErrors.SERVER_ERRORS.INTERNAL);
     }
   }
 };
