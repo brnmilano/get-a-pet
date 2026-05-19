@@ -21,7 +21,10 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Rotas para os endpoints
 const UserRoutes = require("./routes/UserRoutes");
+const PetRoutes = require("./routes/PetRoutes");
+
 app.use("/users", UserRoutes);
+app.use("/pets", PetRoutes);
 
 // Rotas
 app.listen(5000, () => {

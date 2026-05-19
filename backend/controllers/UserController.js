@@ -11,36 +11,23 @@ module.exports = class UserController {
     const { name, email, password, confirmPassword, phone } = req.body;
 
     const requiredFields = {
-      name: "O nome é obrigatório!",
-      email: "O email é obrigatório!",
-      password: "A senha é obrigatória!",
-      confirmPassword: "A confirmação de senha é obrigatória!",
-      phone: "O telefone é obrigatório!",
+      name: httpErrors.CLIENT_ERRORS.USER_NAME_REQUIRED,
+      email: httpErrors.CLIENT_ERRORS.USER_EMAIL_REQUIRED,
+      password: httpErrors.CLIENT_ERRORS.USER_PASSWORD_REQUIRED,
+      confirmPassword: httpErrors.CLIENT_ERRORS.USER_CONFIRM_PASSWORD_REQUIRED,
+      phone: httpErrors.CLIENT_ERRORS.USER_PHONE_REQUIRED,
     };
 
     // Valida os campos obrigatórios
-    for (const [field, message] of Object.entries(requiredFields)) {
+    for (const [field, error] of Object.entries(requiredFields)) {
       if (!req.body[field]) {
-        const error = { ...httpErrors.CLIENT_ERRORS.REQUIRED_FIELD };
-
-        error.message = error.message.replace("field_name", field);
-
-        return res.status(422).json(error);
+        return res.status(error.code).json(error);
       }
     }
 
     // Validações customizadas (que não são apenas campos obrigatórios)
-    const customValidations = [
-      {
-        condition: password !== confirmPassword,
-        message: "A senha e a confirmação de senha precisam ser iguais!",
-      },
-    ];
-
-    for (const validation of customValidations) {
-      if (validation.condition) {
-        return res.status(422).json(httpErrors.CLIENT_ERRORS.PASSWORD_MISMATCH);
-      }
+    if (password !== confirmPassword) {
+      return res.status(422).json(httpErrors.CLIENT_ERRORS.PASSWORD_MISMATCH);
     }
 
     // Verifica se o Usuário já existe
@@ -158,14 +145,14 @@ module.exports = class UserController {
 
     // Validações de campos obrigatórios
     const requiredFields = {
-      name: "O nome é obrigatório!",
-      email: "O e-mail é obrigatório!",
-      phone: "O telefone é obrigatório!",
+      name: httpErrors.CLIENT_ERRORS.USER_NAME_REQUIRED,
+      email: httpErrors.CLIENT_ERRORS.USER_EMAIL_REQUIRED,
+      phone: httpErrors.CLIENT_ERRORS.USER_PHONE_REQUIRED,
     };
 
-    for (const [field, message] of Object.entries(requiredFields)) {
+    for (const [field, error] of Object.entries(requiredFields)) {
       if (!req.body[field]) {
-        return res.status(422).json({ message });
+        return res.status(error.code).json(error);
       }
     }
 
