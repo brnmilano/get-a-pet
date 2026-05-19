@@ -3,8 +3,6 @@
  * Centraliza a lógica de resposta em sucesso e erro
  */
 
-const httpErrors = require("../constants/httpErrors");
-
 module.exports = {
   /**
    * Retorna uma resposta de sucesso padronizada
