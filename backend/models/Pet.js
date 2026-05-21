@@ -33,7 +33,7 @@ const PetSchema = mongoose.model(
       adopter: Object,
     },
     // Cria duas colunas novas automaticamente: createdAt e updatedAt
-    { timestamps: true },
+    { timestamps: true, versionKey: false },
   ),
 );
 

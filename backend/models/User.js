@@ -30,7 +30,7 @@ const UserSchema = mongoose.model(
       },
     },
     // Cria duas colunas novas automaticamente: createdAt e updatedAt
-    { timestamps: true },
+    { timestamps: true, versionKey: false },
   ),
 );
 
