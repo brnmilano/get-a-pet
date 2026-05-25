@@ -1,47 +1,28 @@
-interface FormErrors {
-  [key: string]: string;
-}
+import type { RegisterFormData } from "../types/auth.types";
+import type { FormErrors } from "../types/formErros.type";
 
-interface RegisterFormData {
-  name: string;
-  phone: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+/* Validações reutilizáveis por campo */
+const fieldValidations: {
+  [key: string]: (value: string) => string;
+} = {
+  name: (value: string) => (value.trim() === "" ? "O nome é obrigatório." : ""),
+  phone: (value: string) =>
+    value.trim() === "" ? "O telefone é obrigatório." : "",
+  email: (value: string) =>
+    value.trim() === "" ? "O email é obrigatório." : "",
+  password: (value: string) =>
+    value.trim() === "" ? "A senha é obrigatória." : "",
+  confirmPassword: (value: string) =>
+    value.trim() === "" ? "A confirmação de senha é obrigatória." : "",
+};
 
-export const validateRegisterField = (name: string, value: string): string => {
-  const trimmedValue = value.trim();
+/* Função genérica para validar um campo */
+export const validateField = (name: string, value: string): string => {
+  return fieldValidations[name]?.(value) ?? "";
+};
 
-  switch (name) {
-    case "name":
-      if (trimmedValue === "") {
-        return "O nome é obrigatório.";
-      }
-      break;
-    case "phone":
-      if (trimmedValue === "") {
-        return "O telefone é obrigatório.";
-      }
-      break;
-    case "email":
-      if (trimmedValue === "") {
-        return "O email é obrigatório.";
-      }
-      break;
-    case "password":
-      if (trimmedValue === "") {
-        return "A senha é obrigatória.";
-      }
-      break;
-    case "confirmPassword":
-      if (trimmedValue === "") {
-        return "A confirmação de senha é obrigatória.";
-      }
-      break;
-  }
-
-  return "";
+export const validateFields = (name: string, value: string): string => {
+  return validateField(name, value);
 };
 
 export const validateRegisterForm = (
@@ -59,7 +40,8 @@ export const validateRegisterForm = (
   ] as const;
 
   fieldsToValidate.forEach((field) => {
-    const error = validateRegisterField(field, formData[field]);
+    const error = validateField(field, formData[field]);
+
     if (error) {
       newErrors[field] = error;
     }
@@ -80,25 +62,6 @@ export const validateRegisterForm = (
   return newErrors;
 };
 
-export const validateLoginField = (name: string, value: string): string => {
-  const trimmedValue = value.trim();
-
-  switch (name) {
-    case "email":
-      if (trimmedValue === "") {
-        return "O email é obrigatório.";
-      }
-      break;
-    case "password":
-      if (trimmedValue === "") {
-        return "A senha é obrigatória.";
-      }
-      break;
-  }
-
-  return "";
-};
-
 export const validateLoginForm = (formData: {
   email: string;
   password: string;
@@ -109,7 +72,7 @@ export const validateLoginForm = (formData: {
   const fieldsToValidate = ["email", "password"] as const;
 
   fieldsToValidate.forEach((field) => {
-    const error = validateLoginField(field, formData[field]);
+    const error = validateField(field, formData[field]);
 
     if (error) {
       newErrors[field] = error;

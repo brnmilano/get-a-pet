@@ -1,12 +1,14 @@
-export interface RegisterFormErros {
+export interface FormErrors {
   name?: string;
   phone?: string;
   email?: string;
   password?: string;
   confirmPassword?: string;
+  image?: string;
 }
 
-export interface LoginFormErros {
-  email?: string;
-  password?: string;
-}
+export type RegisterFormErros = FormErrors;
+
+export type LoginFormErros = FormErrors;
+
+export type ProfileFormErrors = FormErrors;

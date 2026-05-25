@@ -16,10 +16,7 @@ import type { RegisterFormData } from "../../types/auth.types";
 import { AuthContext } from "../../context/AuthContext";
 
 /* Utils */
-import {
-  validateRegisterField,
-  validateRegisterForm,
-} from "../../utils/validators";
+import { validateFields, validateRegisterForm } from "../../utils/validators";
 
 export function RegisterPage() {
   const { register } = useContext(AuthContext);
@@ -42,7 +39,7 @@ export function RegisterPage() {
       [name]: value,
     }));
 
-    const errorMessage = validateRegisterField(name, value);
+    const errorMessage = validateFields(name, value);
     setErrors((prev) => ({
       ...prev,
       [name]: errorMessage,

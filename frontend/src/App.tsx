@@ -10,6 +10,7 @@ import { LoginPage } from "./pages/Auth/Login";
 import { Navbar } from "./components/layout/Navbar/Navbar";
 import { Footer } from "./components/layout/Footer/Footer";
 import { Container } from "./components/layout/Container/Container";
+import { Profile } from "./pages/User/Profile";
 
 /* Contexts */
 import { AuthProvider } from "./context/AuthContext";
@@ -40,6 +41,8 @@ export default function App() {
             <Route path="/login" element={<LoginPage />} />
 
             <Route path="/register" element={<RegisterPage />} />
+
+            <Route path="/user/profile" element={<Profile />} />
           </Routes>
         </Container>
 

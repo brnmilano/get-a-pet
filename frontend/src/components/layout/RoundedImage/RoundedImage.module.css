@@ -1,0 +1,19 @@
+.rounded_image {
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.small {
+  width: 80px;
+  height: 80px;
+}
+
+.medium {
+  width: 150px;
+  height: 150px;
+}
+
+.large {
+  width: 250px;
+  height: 250px;
+}

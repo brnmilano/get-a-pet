@@ -16,10 +16,7 @@ import type { LoginFormErros } from "../../types/formErros.type";
 import { AuthContext } from "../../context/AuthContext";
 
 /* Utils */
-import {
-  validateLoginForm,
-  validateRegisterField,
-} from "../../utils/validators";
+import { validateLoginForm, validateFields } from "../../utils/validators";
 import type { Login } from "../../types/auth.types";
 
 export function LoginPage() {
@@ -40,7 +37,7 @@ export function LoginPage() {
       [name]: value,
     }));
 
-    const errorMessage = validateRegisterField(name, value);
+    const errorMessage = validateFields(name, value);
 
     setErrors((prev) => ({
       ...prev,
