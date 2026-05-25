@@ -8,20 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 import type { AxiosError } from "axios";
 import { useEffect, useState } from "react";
-
-interface User {
-  name: string;
-  phone: string;
-  email: string;
-  password: string;
-}
-
-interface AuthResponse {
-  code: number;
-  status: string;
-  message: string;
-  token: string;
-}
+import type { User, Login, AuthResponse } from "../types/auth.types";
 
 export default function useAuth() {
   const navigate = useNavigate();
@@ -67,6 +54,32 @@ export default function useAuth() {
     }
   }
 
+  async function login(user: Login) {
+    try {
+      const data = await api
+        .post("/users/login", user)
+        .then((response) => {
+          return response.data as AuthResponse;
+        })
+        .finally(() => {
+          toast.success("Login realizado com sucesso!");
+        });
+
+      authUser(data);
+    } catch (error) {
+      const axiosError = error as AxiosError<{ message: string }>;
+
+      console.error(
+        "Erro ao realizar login:",
+        axiosError.response?.data.message || error,
+      );
+
+      toast.error(
+        axiosError.response?.data.message || "Erro ao realizar login",
+      );
+    }
+  }
+
   async function logout() {
     setAuthenticated(false);
 
@@ -85,5 +98,5 @@ export default function useAuth() {
     navigate("/login");
   }
 
-  return { register, authUser, authenticated, logout };
+  return { register, login, logout, authUser, authenticated };
 }

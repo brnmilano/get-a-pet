@@ -12,12 +12,12 @@ import { Footer } from "./components/layout/Footer/Footer";
 import { Container } from "./components/layout/Container/Container";
 
 /* Contexts */
-import { UserProvider } from "./context/UserContext";
+import { AuthProvider } from "./context/AuthContext";
 
 export default function App() {
   return (
     <Router>
-      <UserProvider>
+      <AuthProvider>
         <Navbar />
 
         <Toaster
@@ -44,7 +44,7 @@ export default function App() {
         </Container>
 
         <Footer />
-      </UserProvider>
+      </AuthProvider>
     </Router>
   );
 }

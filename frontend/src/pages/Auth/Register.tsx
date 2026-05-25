@@ -8,8 +8,12 @@ import { Input } from "../../components/form/Input/Input";
 import { Link } from "react-router-dom";
 import styles from "../../components/form/Form.module.css";
 
+/* Types */
+import type { RegisterFormErros } from "../../types/formErros.type";
+import type { RegisterFormData } from "../../types/auth.types";
+
 /* Context */
-import { UserContext } from "../../context/UserContext";
+import { AuthContext } from "../../context/AuthContext";
 
 /* Utils */
 import {
@@ -17,24 +21,8 @@ import {
   validateRegisterForm,
 } from "../../utils/validators";
 
-interface RegisterFormData {
-  name: string;
-  phone: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
-
-interface FormErrors {
-  name?: string;
-  phone?: string;
-  email?: string;
-  password?: string;
-  confirmPassword?: string;
-}
-
 export function RegisterPage() {
-  const { register } = useContext(UserContext);
+  const { register } = useContext(AuthContext);
 
   const [formData, setFormData] = useState<RegisterFormData>({
     name: "",
@@ -44,7 +32,7 @@ export function RegisterPage() {
     confirmPassword: "",
   });
 
-  const [errors, setErrors] = useState<FormErrors>({});
+  const [errors, setErrors] = useState<RegisterFormErros>({});
 
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;

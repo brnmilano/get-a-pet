@@ -5,10 +5,10 @@ import styles from "./Navbar.module.css";
 import Logo from "../../../assets/images/logo.png";
 
 /* Context */
-import { UserContext } from "../../../context/UserContext";
+import { AuthContext } from "../../../context/AuthContext";
 
 export function Navbar() {
-  const { authenticated, logout } = useContext(UserContext);
+  const { authenticated, logout } = useContext(AuthContext);
 
   return (
     <nav className={styles.navbar}>

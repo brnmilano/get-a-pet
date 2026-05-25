@@ -79,3 +79,42 @@ export const validateRegisterForm = (
 
   return newErrors;
 };
+
+export const validateLoginField = (name: string, value: string): string => {
+  const trimmedValue = value.trim();
+
+  switch (name) {
+    case "email":
+      if (trimmedValue === "") {
+        return "O email é obrigatório.";
+      }
+      break;
+    case "password":
+      if (trimmedValue === "") {
+        return "A senha é obrigatória.";
+      }
+      break;
+  }
+
+  return "";
+};
+
+export const validateLoginForm = (formData: {
+  email: string;
+  password: string;
+}): FormErrors => {
+  const newErrors: FormErrors = {};
+
+  // Validar cada campo
+  const fieldsToValidate = ["email", "password"] as const;
+
+  fieldsToValidate.forEach((field) => {
+    const error = validateLoginField(field, formData[field]);
+
+    if (error) {
+      newErrors[field] = error;
+    }
+  });
+
+  return newErrors;
+};
