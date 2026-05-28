@@ -1,5 +1,5 @@
-import api from "../utils/api";
-import type { UserProfile } from "../types/profile.types";
+import api from "../../utils/api";
+import type { UserProfile } from "../../types/profile.types";
 
 export async function getUserProfile(token: string): Promise<UserProfile> {
   const response = await api.get("/users/checkuser", {
