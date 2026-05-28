@@ -221,4 +221,36 @@ router.patch(
   UserController.editUser,
 );
 
+/**
+ * @swagger
+ * /users/{id}:
+ *   delete:
+ *     summary: Deletar usuário
+ *     description: Deleta a conta de um usuário. Requer autenticação via token Bearer.
+ *     tags:
+ *       - Users
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID do usuário a ser deletado
+ *         example: "507f1f77bcf86cd799439011"
+ *     responses:
+ *       200:
+ *         description: Usuário deletado com sucesso
+ *       403:
+ *         description: Sem permissão para deletar este usuário
+ *       404:
+ *         description: Usuário não encontrado
+ *       401:
+ *         description: Token não fornecido ou inválido
+ *       500:
+ *         description: Erro no servidor
+ * */
+router.delete("/:id", verifyToken, UserController.deleteUser);
+
 module.exports = router;

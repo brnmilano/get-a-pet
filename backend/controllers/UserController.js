@@ -267,4 +267,44 @@ module.exports = class UserController {
       });
     }
   }
+
+  static async deleteUser(req, res) {
+    const id = req.params.id;
+
+    const token = getToken(req);
+    const user = await getUserByToken(token);
+
+    // Verificar se o usuário que está deletando é o dono da conta
+    if (user._id.toString() !== id) {
+      return res.status(403).json({
+        code: 403,
+        status: "error",
+        message: "Você não tem permissão para deletar este usuário.",
+      });
+    }
+
+    try {
+      const deletedUser = await UserSchema.findByIdAndDelete(id);
+
+      if (!deletedUser) {
+        return res.status(404).json({
+          code: 404,
+          status: "error",
+          message: "Usuário não encontrado.",
+        });
+      }
+
+      res.status(200).json({
+        code: 200,
+        status: "success",
+        message: "Usuário deletado com sucesso!",
+      });
+    } catch (error) {
+      return res.status(500).json({
+        code: 500,
+        status: "error",
+        message: "Erro ao deletar usuário.",
+      });
+    }
+  }
 };
