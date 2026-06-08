@@ -14,6 +14,9 @@ import { Profile } from "./pages/User/Profile";
 
 /* Contexts */
 import { AuthProvider } from "./context/AuthContext";
+import { AddPet } from "./pages/Pets/AddPet/AddPet";
+import { MyPets } from "./pages/Pets/MyPets/MyPets";
+import { EditPet } from "./pages/Pets/EditPet/EditPet";
 
 export default function App() {
   return (
@@ -43,6 +46,12 @@ export default function App() {
             <Route path="/register" element={<RegisterPage />} />
 
             <Route path="/user/profile" element={<Profile />} />
+
+            <Route path="/pets/mypets" element={<MyPets />} />
+
+            <Route path="/pets/add" element={<AddPet />} />
+
+            <Route path="/pets/edit/:id" element={<EditPet />} />
           </Routes>
         </Container>
 

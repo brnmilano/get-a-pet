@@ -12,10 +12,12 @@ import styles from "./Profile.module.css";
 import type { UserProfile } from "../../types/profile.types";
 import type { ProfileFormErrors } from "../../types/formErros.type";
 
-/* Services */
-import { getUserProfile } from "../../services/getProfile";
+/* Utils */
 import { validateFields } from "../../utils/validators";
-import { patchUserProfile } from "../../services/patchProfile";
+
+/* Services */
+import { patchUserProfile } from "../../services/User/patchProfile";
+import { getUserProfile } from "../../services/User/getProfile";
 
 export function Profile() {
   const [token] = useState(localStorage.getItem("token") || "");
