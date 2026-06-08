@@ -6,7 +6,7 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   text: string;
   placeholder: string;
   handleOnChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  value: string | number;
+  value?: string | number;
   multiple?: boolean;
   name: string;
   error?: string;

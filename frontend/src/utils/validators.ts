@@ -14,6 +14,14 @@ const fieldValidations: {
     value.trim() === "" ? "A senha é obrigatória." : "",
   confirmPassword: (value: string) =>
     value.trim() === "" ? "A confirmação de senha é obrigatória." : "",
+  age: (value: string) =>
+    value.trim() === "" ? "A idade do pet é obrigatória." : "",
+  weight: (value: string) =>
+    value.trim() === "" ? "O peso do pet é obrigatório." : "",
+  color: (value: string) =>
+    value.trim() === "" ? "A cor do pet é obrigatória." : "",
+  images: (value: string) =>
+    value.trim() === "" ? "Selecione pelo menos uma imagem." : "",
 };
 
 /* Função genérica para validar um campo */
