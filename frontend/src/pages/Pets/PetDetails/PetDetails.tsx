@@ -12,7 +12,7 @@ import type { Pet } from "../../../types/pet.type";
 
 /* Estilos */
 import styles from "./PetDetails.module.css";
-import { schedulePet } from "../../../services/Pets/schedulePet";
+import { patchSchedulePet } from "../../../services/Pets/patchSchedulePet";
 
 export function PetDetails() {
   const { id } = useParams();
@@ -27,7 +27,7 @@ export function PetDetails() {
 
   const schedule = async () => {
     try {
-      await schedulePet(token, id);
+      await patchSchedulePet(token, id);
 
       toast.success(`Visita para ver o pet ${pet.name} agendada com sucesso.`);
     } catch (error) {

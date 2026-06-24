@@ -53,6 +53,7 @@ module.exports = class PetController {
       user: {
         _id: user._id,
         name: user.name,
+        phone: user.phone,
         image: user.image,
       },
     });
@@ -131,6 +132,8 @@ module.exports = class PetController {
       const pets = await Pet.find({ "adopter._id": user._id }).sort(
         "-createdAt",
       );
+
+      console.log(pets);
 
       res.status(200).json({
         code: 200,

@@ -30,3 +30,37 @@ export interface GetPetsResponse {
   message: string;
   pets: Pet[];
 }
+
+export interface User {
+  _id: string;
+  name: string;
+  phone: string;
+  image: string;
+}
+
+export interface Adopter {
+  _id: string;
+  phone: string;
+  name: string;
+}
+
+export interface PetAdoption {
+  _id: string;
+  name: string;
+  age: number;
+  weight: number;
+  color: string;
+  images: string[];
+  available: boolean;
+  createdAt: string;
+  updatedAt: string;
+  user: User;
+  adopter?: Adopter;
+}
+
+export interface GetPetsAdoptionResponse {
+  code: number;
+  status: string;
+  message: string;
+  pets: PetAdoption[];
+}

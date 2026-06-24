@@ -9,6 +9,7 @@ import { AddPet } from "./pages/Pets/AddPet/AddPet";
 import { MyPets } from "./pages/Pets/MyPets/MyPets";
 import { EditPet } from "./pages/Pets/EditPet/EditPet";
 import { PetDetails } from "./pages/Pets/PetDetails/PetDetails";
+import { MyAdoptions } from "./pages/Pets/MyAdoptions/MyAdoptions";
 
 /* Componentes de Layout */
 import { Navbar } from "./components/layout/Navbar/Navbar";
@@ -55,6 +56,8 @@ export default function App() {
             <Route path="/pets/edit/:id" element={<EditPet />} />
 
             <Route path="/pet/:id" element={<PetDetails />} />
+
+            <Route path="/pet/myadoptions" element={<MyAdoptions />} />
           </Routes>
         </Container>
 

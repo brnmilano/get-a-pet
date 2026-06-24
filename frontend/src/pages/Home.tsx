@@ -63,10 +63,8 @@ export function HomePage() {
               {pet.available ? (
                 <Link to={`/pet/${pet._id}`}>Mais detalhes</Link>
               ) : (
-                <p className={styles.adopted_text}>Adotado</p>
+                <p className={styles.adopted_text}>Adotado!</p>
               )}
-
-              <p>{pet.adopter ? "Adotado" : "Disponível para adoção"}</p>
             </div>
           ))}
 

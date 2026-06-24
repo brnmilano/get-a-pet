@@ -15,10 +15,27 @@ import { RoundedImage } from "../../../components/layout/RoundedImage/RoundedIma
 
 /* Estilos */
 import styles from "../Dashboard.module.css";
+import { patchConcludeAdoption } from "../../../services/Pets/patchConcludeAdoption";
+import axios from "axios";
 
 export function MyPets() {
   const [token] = useState(localStorage.getItem("token") || "");
   const [pets, setPets] = useState<Pet[]>([]);
+
+  const concludeAdoption = async (petId: string) => {
+    try {
+      await patchConcludeAdoption(token, petId);
+
+      toast.success(`Adoção do pet feita com sucesso.`);
+    } catch (error) {
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.message
+        : "Erro ao concluir adoção.";
+
+      toast.error(message);
+      console.error("Erro ao concluir adoção:", error);
+    }
+  };
 
   const removePet = async (id: string) => {
     await deletePet(token, id)
@@ -74,12 +91,18 @@ export function MyPets() {
                 {pet.available ? (
                   <>
                     {pet.adopter && (
-                      <button className={styles.conclude_btn}>
+                      <button
+                        className={styles.conclude_btn}
+                        onClick={() => {
+                          concludeAdoption(pet._id);
+                        }}
+                      >
                         Concluir adoção
                       </button>
                     )}
 
                     <Link to={`/pets/edit/${pet._id}`}>Editar</Link>
+
                     <button
                       onClick={() => {
                         removePet(pet._id || "");

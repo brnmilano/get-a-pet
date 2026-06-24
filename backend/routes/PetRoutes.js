@@ -235,6 +235,7 @@ router.get("/mypets", verifyToken, PetController.getAllUserPets);
  *                 user:
  *                   _id: "6a04cf71a0e6560c9d8bca2f"
  *                   name: "Ana Costa"
+ *                   phone: "(61) 9 8342-6022"
  *                   image: "1778700151143.jpeg"
  *                 adopter:
  *                   _id: "6a04cf71a0e6560c9d8bca2c"
