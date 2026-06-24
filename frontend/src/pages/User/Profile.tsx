@@ -1,12 +1,14 @@
+/* Libs */
 import { useEffect, useState, type ChangeEvent } from "react";
 import toast from "react-hot-toast";
 
+/* Componentes */
 import { Input } from "../../components/form/Input/Input";
 import { RoundedImage } from "../../components/layout/RoundedImage/RoundedImage";
 
-/* Styles */
-import formStyles from "../../components/form/Form.module.css";
-import styles from "./Profile.module.css";
+/* Services */
+import { patchUserProfile } from "../../services/User/patchProfile";
+import { getUserProfile } from "../../services/User/getProfile";
 
 /* Types */
 import type { UserProfile } from "../../types/profile.types";
@@ -15,9 +17,9 @@ import type { ProfileFormErrors } from "../../types/formErros.type";
 /* Utils */
 import { validateFields } from "../../utils/validators";
 
-/* Services */
-import { patchUserProfile } from "../../services/User/patchProfile";
-import { getUserProfile } from "../../services/User/getProfile";
+/* Styles */
+import formStyles from "../../components/form/Form.module.css";
+import styles from "./Profile.module.css";
 
 export function Profile() {
   const [token] = useState(localStorage.getItem("token") || "");
@@ -79,7 +81,6 @@ export function Profile() {
 
     if (!user.id) {
       toast.error("ID do usuário não encontrado");
-      console.error("user.id está vazio:", user);
       return;
     }
 
@@ -97,11 +98,6 @@ export function Profile() {
           formData.append(key, value);
         }
       });
-
-      // Log melhorado - não tenta converter File para string
-      console.log("Enviando para:", `/users/edit/${user.id}`);
-      console.log("UserID:", user.id);
-      console.log("FormData campos:", Array.from(formData.keys()));
 
       await patchUserProfile(token, formData, user.id);
 

@@ -1,11 +1,20 @@
+/* Libs */
 import { useEffect, useState } from "react";
-import { PetForm } from "../../../components/form/PetForm/PetForm";
-import type { Pet } from "../../../types/pet.type";
-import styles from "./EditPet.module.css";
-import toast from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
+import toast from "react-hot-toast";
+
+/* Componentes */
+import { PetForm } from "../../../components/form/PetForm/PetForm";
+
+/* Services */
 import { getPetById } from "../../../services/Pets/getPetById";
 import { editPet } from "../../../services/Pets/editPet";
+
+/* Types */
+import type { Pet } from "../../../types/pet.type";
+
+/* Estilos */
+import styles from "./EditPet.module.css";
 
 export function EditPet() {
   const navigate = useNavigate();

@@ -1,11 +1,20 @@
+/* Libs */
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import type { Pet } from "../../../types/pet.type";
-import { getAllMyPets } from "../../../services/Pets/getAllMyPets";
-import { RoundedImage } from "../../../components/layout/RoundedImage/RoundedImage";
-import styles from "../Dashboard.module.css";
-import { deletePet } from "../../../services/Pets/deletePet";
 import toast from "react-hot-toast";
+
+/* Services */
+import { getAllMyPets } from "../../../services/Pets/getAllMyPets";
+import { deletePet } from "../../../services/Pets/deletePet";
+
+/* Types */
+import type { Pet } from "../../../types/pet.type";
+
+/* Componentes */
+import { RoundedImage } from "../../../components/layout/RoundedImage/RoundedImage";
+
+/* Estilos */
+import styles from "../Dashboard.module.css";
 
 export function MyPets() {
   const [token] = useState(localStorage.getItem("token") || "");

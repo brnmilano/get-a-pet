@@ -4,9 +4,10 @@ import {
   type ChangeEvent,
   type SubmitEvent,
 } from "react";
-import { Input } from "../../components/form/Input/Input";
 import { Link } from "react-router-dom";
-import styles from "../../components/form/Form.module.css";
+
+/* Componentes */
+import { Input } from "../../components/form/Input/Input";
 
 /* Types */
 import type { RegisterFormErros } from "../../types/formErros.type";
@@ -17,6 +18,9 @@ import { AuthContext } from "../../context/AuthContext";
 
 /* Utils */
 import { validateFields, validateRegisterForm } from "../../utils/validators";
+
+/* Estilos */
+import styles from "../../components/form/Form.module.css";
 
 export function RegisterPage() {
   const { register } = useContext(AuthContext);

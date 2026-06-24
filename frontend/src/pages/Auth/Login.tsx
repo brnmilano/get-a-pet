@@ -1,3 +1,4 @@
+/* Libs */
 import {
   useState,
   useContext,
@@ -6,18 +7,21 @@ import {
 } from "react";
 import { Link } from "react-router-dom";
 
+/* Componentes */
 import { Input } from "../../components/form/Input/Input";
-import styles from "../../components/form/Form.module.css";
 
 /* Types */
 import type { LoginFormErros } from "../../types/formErros.type";
+import type { Login } from "../../types/auth.types";
 
 /* Context */
 import { AuthContext } from "../../context/AuthContext";
 
 /* Utils */
 import { validateLoginForm, validateFields } from "../../utils/validators";
-import type { Login } from "../../types/auth.types";
+
+/* Estilos */
+import styles from "../../components/form/Form.module.css";
 
 export function LoginPage() {
   const { login } = useContext(AuthContext);

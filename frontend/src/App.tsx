@@ -5,6 +5,10 @@ import { Toaster } from "react-hot-toast";
 import { HomePage } from "./pages/Home";
 import { RegisterPage } from "./pages/Auth/Register";
 import { LoginPage } from "./pages/Auth/Login";
+import { AddPet } from "./pages/Pets/AddPet/AddPet";
+import { MyPets } from "./pages/Pets/MyPets/MyPets";
+import { EditPet } from "./pages/Pets/EditPet/EditPet";
+import { PetDetails } from "./pages/Pets/PetDetails/PetDetails";
 
 /* Componentes de Layout */
 import { Navbar } from "./components/layout/Navbar/Navbar";
@@ -14,9 +18,6 @@ import { Profile } from "./pages/User/Profile";
 
 /* Contexts */
 import { AuthProvider } from "./context/AuthContext";
-import { AddPet } from "./pages/Pets/AddPet/AddPet";
-import { MyPets } from "./pages/Pets/MyPets/MyPets";
-import { EditPet } from "./pages/Pets/EditPet/EditPet";
 
 export default function App() {
   return (
@@ -52,6 +53,8 @@ export default function App() {
             <Route path="/pets/add" element={<AddPet />} />
 
             <Route path="/pets/edit/:id" element={<EditPet />} />
+
+            <Route path="/pet/:id" element={<PetDetails />} />
           </Routes>
         </Container>
 

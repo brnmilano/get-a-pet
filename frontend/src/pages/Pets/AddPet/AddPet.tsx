@@ -1,12 +1,15 @@
+/* Libs */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 /* Componentes */
 import { PetForm } from "../../../components/form/PetForm/PetForm";
-import toast from "react-hot-toast";
 
 /* Estilos */
 import styles from "./AddPet.module.css";
+
+/* Types */
 import type { Pet } from "../../../types/pet.type";
 
 /* Services */
