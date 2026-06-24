@@ -25,11 +25,15 @@ const fieldValidations: {
 };
 
 /* Função genérica para validar um campo */
-export const validateField = (name: string, value: string): string => {
-  return fieldValidations[name]?.(value) ?? "";
+export const validateField = (name: string, value: string | number): string => {
+  const stringValue = String(value);
+  return fieldValidations[name]?.(stringValue) ?? "";
 };
 
-export const validateFields = (name: string, value: string): string => {
+export const validateFields = (
+  name: string,
+  value: string | number,
+): string => {
   return validateField(name, value);
 };
 

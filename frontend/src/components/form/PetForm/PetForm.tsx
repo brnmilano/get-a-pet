@@ -136,7 +136,7 @@ export function PetForm({ handleSubmit, petData, btnText }: PetFormProps) {
         type="text"
         text="Nome do Pet"
         placeholder="Digite o nome do pet"
-        value={pet.name || ""}
+        value={pet.name}
         handleOnChange={handleOnChange}
         error={errors.name}
       />
@@ -146,7 +146,7 @@ export function PetForm({ handleSubmit, petData, btnText }: PetFormProps) {
         type="text"
         text="Idade do Pet"
         placeholder="Digite a idade do pet"
-        value={pet.age || ""}
+        value={pet.age}
         handleOnChange={handleOnChange}
         error={errors.age}
       />
@@ -156,7 +156,7 @@ export function PetForm({ handleSubmit, petData, btnText }: PetFormProps) {
         type="number"
         text="Peso do Pet"
         placeholder="Digite o peso do pet"
-        value={pet.weight || ""}
+        value={pet.weight}
         handleOnChange={handleOnChange}
         error={errors.weight}
       />
